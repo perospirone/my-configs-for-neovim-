@@ -18,8 +18,8 @@ Plug 'joshdick/onedark.vim'
 Plug 'majutsushi/tagbar'
 
 " Needs vim8 with python3
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-vetur'
 
 " Cscope script
 Plug 'joe-skb7/cscope-maps'
@@ -68,13 +68,11 @@ Plug 'yggdroot/indentline'
 " Plug 'vbe0201/vimdiscord'
 " Plug 'vim-scripts/taglist.vim'
 
-" Plug 'aurieh/discord.nvim'
-
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 Plug 'apzelos/blamer.nvim'
 
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 
 Plug 'tpope/vim-dispatch'             "| Optional
 Plug 'tpope/vim-projectionist'        "|
@@ -82,7 +80,7 @@ Plug 'tpope/vim-projectionist'        "|
 Plug 'noahfrederick/vim-composer'     "|
 Plug 'noahfrederick/vim-laravel'
 
-Plug 'valloric/youcompleteme'
+" Plug 'valloric/youcompleteme'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -92,12 +90,40 @@ Plug 'autozimu/LanguageClient-neovim', {
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
 
+Plug 'airblade/vim-gitgutter'
+
+" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+Plug 'davisdude/vim-love-docs'
+
+Plug 'tbastos/vim-lua'
+
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'nvim-lua/completion-nvim'
+
+Plug 'posva/vim-vue'
+
+Plug 'pangloss/vim-javascript'
+
 " Initialize plugin system
 call plug#end()
 
+set updatetime=250
+
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 let g:ycm_autoclose_preview_window_after_insertion = 1 
 let g:ycm_filetype_blacklist = {'go': 1}
+
+
+" Launch gopls when Go files are in use
+let g:LanguageClient_serverCommands = {
+       \ 'go': ['gopls']
+       \ }
+" Run gofmt on save
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
 
 
 " Configuration Golang
@@ -152,7 +178,7 @@ autocmd! VimEnter * NERDTree | wincmd w
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " MyNext() and MyPrev(): Movement between tabs OR buffers
 function! MyNext()

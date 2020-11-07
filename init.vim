@@ -106,6 +106,8 @@ Plug 'posva/vim-vue'
 
 Plug 'pangloss/vim-javascript'
 
+Plug 'rust-lang/rust.vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -173,7 +175,7 @@ let g:airline_powerline_fonts = 1
 " Open a NERDTree automatically when vim starts up
 " autocmd vimenter * NERDTree
 " When open change the focus to the file (and not the NERDTree)
-autocmd! VimEnter * NERDTree | wincmd w
+" autocmd! VimEnter * NERDTree | wincmd w
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -270,7 +272,7 @@ set wildmenu
 
 set confirm
 
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.blade.php'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.blade.php, *.vue'
 
 " Search
 set hlsearch     " highlight matches

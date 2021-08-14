@@ -14,8 +14,10 @@ Plug 'scrooloose/nerdtree'
 " Colorscheme
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'joshdick/onedark.vim'
+Plug 'dracula/vim', { 'commit': '147f389f4275cec4ef43ebc25e2011c57b45cc00' }
 
 Plug 'majutsushi/tagbar'
+"Plug 'ryanoasis/vim-devicons'
 
 " Needs vim8 with python3
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -44,8 +46,6 @@ Plug 'shawncplus/phpcomplete.vim'
 Plug 'othree/html5.vim'
 
 Plug 'jwalton512/vim-blade'
-
-Plug 'noahfrederick/vim-laravel'
 
 Plug 'othree/html5.vim'
 
@@ -92,7 +92,7 @@ Plug 'junegunn/fzf'
 
 Plug 'airblade/vim-gitgutter'
 
-" Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 Plug 'davisdude/vim-love-docs'
 
@@ -108,8 +108,22 @@ Plug 'pangloss/vim-javascript'
 
 Plug 'rust-lang/rust.vim'
 
+Plug 'wakatime/vim-wakatime'
+
+Plug 'maxmellon/vim-jsx-pretty'
+
+Plug 'kassio/neoterm'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+
+Plug 'preservim/nerdcommenter'
+
+Plug 'edwinb/idris2-vim'
+
 " Initialize plugin system
 call plug#end()
+
+filetype plugin on
 
 set updatetime=250
 
@@ -122,11 +136,10 @@ let g:ycm_filetype_blacklist = {'go': 1}
 
 " Launch gopls when Go files are in use
 let g:LanguageClient_serverCommands = {
-       \ 'go': ['gopls']
-       \ }
+      \ 'go': ['gopls']
+      \ }
 " Run gofmt on save
-autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
-
+" autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
 
 " Configuration Golang
 filetype plugin indent on
@@ -141,7 +154,7 @@ let g:go_highlight_extra_types = 1
 let g:go_highlight_operators = 1
 
 " Auto formatting and importing
-let g:go_fmt_autosave = 1
+let g:go_fmt_autosave = 0
 let g:go_fmt_command = "goimports"
 
 " Status line types/signatures
@@ -203,14 +216,27 @@ function! MyPrev()
 endfunction
 
 " Configure the colorscheme
-set background=dark
-colorscheme onedark
+" set background=dark
+" colorscheme dracula
+
+color onedark
+highlight Pmenu guibg=white guifg=black gui=bold
+highlight Comment gui=bold
+highlight Normal gui=none
+highlight NonText guibg=none
+
+set termguicolors
+
+hi Normal guibg=NONE ctermbg=NONE
+highlight Normal guibg=NONE ctermbg=NONE
+highlight LineNr guibg=NONE ctermbg=NONE
+
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
- "let g:onedark_termcolors=16
+"let g:onedark_termcolors=16
 
 "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
 "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
@@ -218,6 +244,7 @@ endif
 if (has("termguicolors"))
   set termguicolors
 endif
+
 let g:palenight_terminal_italics=1
 
 " Shows the line numbers
@@ -247,7 +274,7 @@ set showmatch
 " intelligent comments
 set comments=sl:/*,mb:\ *,elx:\ */
 " Enables the mouse wheel and the use in visual mode
-set mouse=a
+" set mouse=a
 " Enable clipboard copy paste. If it is not working
 " just install gvim (even if you don't use it
 " to install de dependencies
@@ -258,11 +285,11 @@ set listchars=tab:>.,trail:~,extends:>,precedes:<
 
 " Fix the ctrl + arrow key problem in tmux
 if &term =~ '^screen'
-    " tmux will send xterm-style keys when its xterm-keys option is on
-    execute "set <xUp>=\e[1;*A"
-    execute "set <xDown>=\e[1;*B"
-    execute "set <xRight>=\e[1;*C"
-    execute "set <xLeft>=\e[1;*D"
+  " tmux will send xterm-style keys when its xterm-keys option is on
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
 endif
 
 
@@ -272,7 +299,7 @@ set wildmenu
 
 set confirm
 
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.blade.php, *.vue'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.blade.php, *.vue, *.js, *.jsx'
 
 " Search
 set hlsearch     " highlight matches
@@ -287,6 +314,7 @@ set tags=tags
 map q :quit<CR>
 map <C-q> :quit!<CR>
 map <C-s> :w<CR>
+map <C-p> :FZF<CR>
 
 " Remove all trailing spaces
 nnoremap <silent> <F4> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
@@ -311,8 +339,3 @@ nnoremap <C-o> <ESC>:NERDTreeToggle<CR>
 let g:linuxsty_patterns = [ "/linux/", "/kernel/" ]
 nnoremap <silent> <F3> :LinuxCodingStyle<CR>
 
-
-" nnoremap <Left> <nop>
-" nnoremap <Right> <nop>
-" nnoremap <Up> <nop>
-" nnoremap <Down> <nop>
